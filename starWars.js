@@ -3,10 +3,19 @@ function getFilms() {
   .then(response => response.json())
   .then(response => {
     let films = response.results;
-    return films.map((film, index) => {
+    films.map((film, index) => {
       console.log(film);
       displayFilms(film, index);
       getBtn();
+      let people = film.characters;
+      people.forEach(person => {
+        fetch(`${person}`)
+        .then(response => response.json())
+        .then(response => {
+          let characters = response.name;
+          getChar(characters, index);
+        })
+      })  
     })
   })
 }
@@ -37,11 +46,27 @@ function displayFilms(film, index) {
   director.innerHTML = `${film.director}`;
   let buttonBack = elmt("button", {class: `btn ${index}`});
   buttonBack.innerHTML = "flip";
-  let back = elmt("div", {class: "back"}, director, buttonBack);
+  let back = elmt("div", {class: `back ${index}`}, director, buttonBack);
   let innerDiv = elmt("div", {class: "card", id: `${index}`}, front, back);
   let outerDiv = elmt("div", {class: "cardContainer"}, innerDiv);
   filmsContainer.appendChild(outerDiv);
   return filmsContainer;
+}
+
+function getChar(data, index) {
+  // get all the characters
+  let characters = elmt("p", {class: "characters"});
+  // console.log(data);
+  // console.log(index);
+  // match characters to each film
+  let card = document.getElementById(`${index}`);
+  let back = card.childNodes[1];
+  // add characters at the back of the card
+  if (`${index}`) {
+    characters.innerHTML = `${data}`;
+    back.appendChild(characters);
+  }
+  // display the characters on each film card
 }
 
 function getBtn() {

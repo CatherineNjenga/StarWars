@@ -96,7 +96,7 @@ body {
   background-color: #ebedf0;;
   transform: perspective(800px) rotateY(0deg);
 }
-.back{
+.back {
   background-color: #fae6fa;
   transform: perspective(800px) rotateY(-180deg); 
 }
