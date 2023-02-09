@@ -5,7 +5,7 @@ Star Wars is a web application where you can flip through cards to view the firs
 
 Live demo: https://plant-flashcards.netlify.app
 
-![Learning Mode on Plant Flashcards](https://i.imgur.com/F643LUN.png)
+![Front side of the cards](assets/screenshot.png)
 
 ## Features
 
