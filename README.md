@@ -3,7 +3,7 @@ Star Wars
 
 Star Wars is a web application where you can flip through cards to view the first six star wars movies' directors and planets.
 
-Live demo: https://plant-flashcards.netlify.app
+Live demo: https://catherinenjenga.github.io/Star_Wars/
 
 ![Front side of the cards](assets/screenshot.png)
 
