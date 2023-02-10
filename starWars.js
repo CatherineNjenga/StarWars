@@ -1,25 +1,38 @@
+// Handle client-side HTTP errors
+const handleError = (response) => {
+  if (!response.ok) {
+    throw Error(response.statusText);
+  } else {
+    return response.json();
+  }
+}
+
 function getFilms() {
   fetch("https://swapi.dev/api/films/")
-  .then(response => response.json())
+  .then(handleError)
   .then(response => {
     let films = response.results;
+    console.log(films);
     films.map((film, index) => {
-      console.log(film);
       displayFilms(film, index);
-      getBtn();
-      let people = film.characters;
-      people.forEach(person => {
-        fetch(`${person}`)
-        .then(response => response.json())
+      let planets = film.planets;
+      planets.forEach(planet => {
+        fetch(planet)
+        .then(handleError)
         .then(response => {
-          let characters = response.name;
-          getChar(characters, index);
+          let planetName = response.name;
+          getPlanet(planetName, index);
+          getBtn();
         })
       })  
     })
   })
+  .catch(error => {
+    console.error(error);
+  })
 }
 
+// helper function for creating dom elements
 function elmt(name, attrs, ...children) {
   let domElement = document.createElement(name);
   for (let attr of Object.keys(attrs)) {
@@ -38,40 +51,42 @@ function displayFilms(film, index) {
   let title = elmt("h1", {class: "title"});
   let year = elmt("p", {class: "year"});
   title.innerHTML = `${film.title}`;
-  year.innerHTML = `${film.release_date}`;
+  year.innerHTML = `-${film.release_date.split("-")[0]}-`;
   let buttonFront = elmt("button", {class: `btn ${index}`});
   buttonFront.innerHTML = "flip";
   let front = elmt("div", {class: "front"}, title, year, buttonFront);
-  let director = elmt("p", {class: "producer"});
+  let director = elmt("p", {class: "director"});
+  let headerOne = elmt("p", {class: "header"});
+  let headerTwo = elmt("p", {class: "header"});
+  headerOne.innerHTML = "Director";
+  headerTwo.innerHTML = "Planets";
   director.innerHTML = `${film.director}`;
   let buttonBack = elmt("button", {class: `btn ${index}`});
   buttonBack.innerHTML = "flip";
-  let back = elmt("div", {class: `back ${index}`}, director, buttonBack);
+  let back = elmt("div", {class: `back ${index}`}, headerOne, director, buttonBack, headerTwo);
   let innerDiv = elmt("div", {class: "card", id: `${index}`}, front, back);
   let outerDiv = elmt("div", {class: "cardContainer"}, innerDiv);
   filmsContainer.appendChild(outerDiv);
   return filmsContainer;
 }
 
-function getChar(data, index) {
-  // get all the characters
-  let characters = elmt("p", {class: "characters"});
-  // console.log(data);
-  // console.log(index);
-  // match characters to each film
+function getPlanet(name, index) {
+  // get all the planets
+  let planet = elmt("p", {class: "planet"});
+  let header = elmt("p", {class: "header"});
+  header.innerHTML = "Planets";
+  // match planets to each film
   let card = document.getElementById(`${index}`);
   let back = card.childNodes[1];
-  // add characters at the back of the card
+  // display planets at the back of the card
   if (`${index}`) {
-    characters.innerHTML = `${data}`;
-    back.appendChild(characters);
+    planet.innerHTML = `${name}`;
+    back.appendChild(planet);
   }
-  // display the characters on each film card
 }
 
 function getBtn() {
   let buttons = document.querySelectorAll(".btn");
-  console.log(buttons);
   for (let i = 0; i < buttons.length; i += 1) {
     buttons[i].onclick = flipCard;
   }
@@ -80,23 +95,11 @@ function getBtn() {
 function flipCard(eventObj) {
   // which button was clicked?
   let button = eventObj.target;
-  console.log(button);
   let buttonId = button.classList[1];
-  console.log(buttonId);
   // pick the card on which the button was clicked.
   let card = document.getElementById(buttonId);
-  console.log(card);
   // flip the card on which the button was clicked
   card.classList.toggle("flip");
-  if (buttonId === 5) {
-    console.log('hello');
-  } 
 }
+
 getFilms();
-
- 
-
-
-
-
-
