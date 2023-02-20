@@ -6,7 +6,7 @@
 ## About
 Star Wars is a web application where you can flip through cards to view the first six star wars movies' directors and planets.
 
-Live demo: https://catherinenjenga.github.io/Star_Wars/
+Live demo: https://catherinenjenga.github.io/StarWars/
 
 ![Front side of the cards](assets/screenshot.png)
 
