@@ -27,7 +27,7 @@ The game is written in vanilla JavaScript, hence requires to run on a modern bro
 
 1. Download ZIP or clone this repo
 ```
-> git clone https://github.com/CatherineNjenga/Star_Wars.git
+> git clone https://github.com/CatherineNjenga/StarWars.git
 ```
 2. Navigate to the folder "docs" and open index.html
 
