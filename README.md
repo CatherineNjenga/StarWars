@@ -1,6 +1,6 @@
 <div align="center">
   <h1>Star Wars</h1>
-  <p>A website based on Star Wars's API</p>
+  <p>A website based on Star Wars's API - SWAPI</p>
 </div>
 
 ## About
